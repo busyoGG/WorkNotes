@@ -37,6 +37,27 @@
 
 ## Android
 
+### 接入 SDK
+
+#### ADMob
+
+> 广告的展示需要在主线程执行，因此需要以 `runOnUiThread` 执行调用。
+
+官方文档见 [
+Mobile Ads SDK (Android)](https://developers.google.com/admob/android/quick-start?hl=zh-cn#import_the_mobile_ads_sdk)
+
+##### Gradle 版本
+
+集成 ADMob 需要较高的 Gradle 版本才能编译，可以通过 File -> Project Structure -> Project 修改（目前使用 8.4.2 版本， Gradle 版本为 8.6）
+
+##### Compile SDK 版本
+
+需要33版本以上，可以通过 File -> Project Structure -> Module -> 具体的项目模块 修改
+
+#### Adjust
+
+官方文档见 [Adjust](https://dev.adjust.com/zh/sdk/android?version=v4)
+
 ### 遇到的问题
 
 #### 无法 Debug
@@ -44,5 +65,27 @@
 修改编译的目标版本，通过以下操作实现：
 
 菜单栏 Build -> Select Build Variant ，然后选择对应的版本即可
+
+#### 无法嵌入广告的 View
+
+参考 [cocos-google-admob](https://github.com/cocos/cocos-google-admob/blob/581874a39503d57d735a294784ccee3d405e12e7/extensions/GoogleAdMob/template/android/libadmob/src/com/cocos/admob/service/BannerService.java#L44)
+
+不能使用 `setContentView` 来创建界面，会导致游戏无法运行。
+
+而是使用以下方法创建 Banner 广告的 View 容器
+
+``` Java
+ //创建Banner容器
+_adContainerView = new RelativeLayout(context);
+Window w = context.getWindow();
+ViewGroup vg = (ViewGroup) w.getDecorView();
+RelativeLayout rl = new RelativeLayout(context);
+RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+ViewGroup.LayoutParams.WRAP_CONTENT);
+lp.addRule(RelativeLayout.ALIGN_TOP);
+lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+_adContainerView.setLayoutParams(lp);
+vg.addView(rl);
+```
 
 
