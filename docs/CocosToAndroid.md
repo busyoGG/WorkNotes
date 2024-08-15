@@ -19,6 +19,19 @@
 
 > 部分交互需要线程安全，如调用原生 Toast ， 参考 [线程安全](https://docs.cocos.com/creator/3.8/manual/zh/advanced-topics/thread-safety.html) 构建代码
 
+### 本地化
+
+根据项目采用不同的本地化方法。主要分为两种：
+
+1. 挂载脚本到 Label 或 Sprite 上，通过脚本生命周期自动执行本地化（已构建）
+2. 通过代码绑定 Label 或 Sprite ，手动执行本地化（未构建）
+
+#### 方法1项目列表
+
+* com.bubble.global
+
+#### 方法2项目列表
+
 ### 遇到的问题
 
 #### 游戏加载报错
@@ -94,4 +107,8 @@ _adContainerView.setLayoutParams(lp);
 vg.addView(rl);
 ```
 
+### 打包
 
+#### Google Play
+
+每次发新版本都在项目的 Gradle 修改 VersionCode 和 VersionName -> 创建/使用密钥 -> 打 AAB 包
